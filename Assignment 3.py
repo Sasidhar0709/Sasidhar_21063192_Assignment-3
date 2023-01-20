@@ -38,7 +38,6 @@ a_ind_1a.reset_index(drop=True)
 
 a_ind_1a.info()
 
-
 a_ind_1a_colnam = a_ind_1a.columns.values.tolist()
 
 # create scaled DataFrame where each variable has mean of 0 and standard dev of 1
@@ -46,8 +45,6 @@ scaled_ind_1 = StandardScaler().fit_transform(a_ind_1a.to_numpy())
 
 # creating the dataframe
 scaled_ind_1 = pd.DataFrame(scaled_ind_1, columns=[a_ind_1a_colnam])
-
-# kmeans=kmeans.fit(df_1.drop(['Country Name','Country Code','Indicator Name','Indicator Code'],axis=1))
 
 scaled_ind_1.head()
 
@@ -99,9 +96,9 @@ for ix in range(n_cluster):
     xc, yc = centers[ix, :]
     plt.plot(xc, yc, "dk", markersize=8)
 
-plt.xlabel(a_ind_1a_colnam[0])
-plt.ylabel(a_ind_1a_colnam[1])
-plt.title('Clustering for 1997 and 2015 for the Renewable electricity output (% of total electricity output)')
+plt.xlabel("Renewable electricity output in 1997")
+plt.ylabel("Renewable electricity output in 2015")
+plt.title('Clustering for 1997 to 2015 for the Renewable electricity output (% of total electricity output)')
 plt.show()
 
 #--------------------------------------------------------------------------------------------------------
@@ -175,9 +172,9 @@ for ix in range(n_cluster):
     xc, yc = centers[ix, :]
     plt.plot(xc, yc, "dk", markersize=8)
 
-plt.xlabel(b_ind_1a_colnam[0])
-plt.ylabel(b_ind_1a_colnam[1])
-plt.title('Clustering for 1997 and 2015 for Renewable energy consumption (% of total final energy consumption)')
+plt.xlabel("Renewable energy consumption in 1997")
+plt.ylabel("Renewable energy consumption (% of total final energy consumption) in 2015")
+plt.title('Clustering for 1997 to 2015 for Renewable energy consumption (% of total final energy consumption)')
 plt.show()
 
 #--------------------------------------------------------------------------------------------------------
@@ -251,13 +248,13 @@ for ix in range(n_cluster):
     xc, yc = centers[ix, :]
     plt.plot(xc, yc, "dk", markersize=8)
 
-plt.xlabel(c_ind_1a_colnam[0])
-plt.ylabel(c_ind_1a_colnam[1])
-plt.title('Clustering for years 1997 and 2015 for the Electricity production from coal sources (% of total)')
+plt.xlabel("Electricity production from coal sources in 1997")
+plt.ylabel("Electricity production from coal sources (% of total) in 2015")
+plt.title('Clustering for 1997 to 2015 for the Electricity production from coal sources (% of total)')
 plt.show()
 
 #----------------------------------------------------------------------------------------------------------------------------------------
-"""# Choosing India and Brazil for Reneawable energy consumption"""
+"""Choosing India and Brazil for Reneawable energy consumption"""
 
 x1=pd.DataFrame()
 x1[0]=a_ind1.iloc[29]
@@ -287,19 +284,10 @@ def linear(x, a, b):
     
     return a*x+b
 
-y_dummy = linear(np.array(pp_b), 5,-0.25)
-def logistic(t, n0, g, t0):
-    """Calculates the logistic function with scale factor n0 and growth rate g"""
-    
-    f = n0 / (1 + np.exp(-g*(t - t0)))
-    
-    return f
-
-
+y_dummy = linear(np.array(pp_b), 0.5,-0.25)
 
 # Fit the dummy exponential data
-
-pars, cov = opt.curve_fit(f=linear, xdata=pp_b, ydata=y_dummy,p0=[4e8, 0.5])
+pars, cov = opt.curve_fit(f=linear, xdata=pp_b, ydata=y_dummy,p0=[4e9, 0.5])
 
 
 # Plot the noisy exponential data
